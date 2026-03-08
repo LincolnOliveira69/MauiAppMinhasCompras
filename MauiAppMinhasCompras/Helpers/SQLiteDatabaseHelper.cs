@@ -59,7 +59,7 @@ namespace MauiAppMinhasCompras.Helpers // Define o namespace para organizar a cl
  // Quando concluída, essa tarefa fornecerá uma lista de objetos "Produto" que atendem ao critério de pesquisa.
  // O uso de Task permite que a aplicação continue rodando sem bloqueio enquanto a consulta é processada.
         {
-            string sql = "SELECT * Produto WHERE descricao LIKE '%" + q + "%'";
+            string sql = "SELECT * FROM Produto WHERE descricao LIKE '%" + q + "%'";
 // Monta um comando SQL para buscar todos os registros da tabela Produto cuja coluna descricao contenha o texto informado em "q".
 // O uso de % é um coringa, ou seja, não importa o que tem antes ou depois.
 
