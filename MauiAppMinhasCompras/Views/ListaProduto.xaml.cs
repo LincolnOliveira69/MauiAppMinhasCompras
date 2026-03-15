@@ -53,8 +53,38 @@ public partial class ListaProduto : ContentPage
 		DisplayAlert("Total dos Produtos", msg, "OK");
     }
 
-    private void MenuItem_Clicked(object sender, EventArgs e)
+    // Remover pelo MenuItem (ação de contexto)
+    private async void MenuItem_Clicked(object sender, EventArgs e)
     {
+        var mi = (MenuItem)sender;
+        var produto = (Produto)mi.BindingContext;
 
+        bool confirm = await DisplayAlert("Remover", $"Deseja remover {produto.Descricao}?", "Sim", "Não");
+        if (confirm)
+        {
+            await App.Db.Delete(produto.Id);
+            lista.Remove(produto);
+        }
+    }
+
+    // Remover pelo botão da Toolbar (item selecionado)
+    private async void ToolbarItem_Clicked_Remover(object sender, EventArgs e)
+    {
+        if (lst_produtos.SelectedItem is Produto produto)
+        {
+            bool confirm = await DisplayAlert("Remover",
+                $"Deseja remover o produto \"{produto.Descricao}\"?",
+                "Sim", "Não");
+
+            if (confirm)
+            {
+                await App.Db.Delete(produto.Id);
+                lista.Remove(produto);
+            }
+        }
+        else
+        {
+            await DisplayAlert("Aviso", "Selecione um produto na lista para remover.", "OK");
+        }
     }
 }
