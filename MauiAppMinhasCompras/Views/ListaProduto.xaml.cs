@@ -58,6 +58,8 @@ public partial class ListaProduto : ContentPage
             // Captura o texto digitado na busca
             string q = e.NewTextValue;
 
+            lst_produtos.IsRefreshing = true;
+
             // Limpa a lista atual
             lista.Clear();
 
@@ -71,6 +73,9 @@ public partial class ListaProduto : ContentPage
         {
             // Se ocorrer erro na busca, exibe alerta
             await DisplayAlert("Ops", ex.Message, "OK");
+        }finally
+        {
+            lst_produtos.IsRefreshing = false;
         }
     }
 
@@ -131,6 +136,38 @@ public partial class ListaProduto : ContentPage
             // Se houver erro na navegação, mostra alerta
             DisplayAlert("Ops", ex.Message, "OK");
         }
+    }
+
+    private async void lst_produtos_Refreshing(object sender, EventArgs e)
+    {
+        try
+        {
+            // Limpa a lista atual para evitar duplicações
+            lista.Clear();
+
+            // Busca todos os produtos no banco de dados
+            List<Produto> tmp = await App.Db.GetAll();
+
+            // Adiciona cada produto retornado à lista observável
+            tmp.ForEach(i => lista.Add(i));
+        }
+        catch (Exception ex)
+        {
+            // Caso ocorra algum erro (ex: falha no banco),
+            // exibe uma mensagem de alerta para o usuário
+            await DisplayAlert("Ops", ex.Message, "OK");
+        
+        } finally
+        {
+            lst_produtos.IsRefreshing = false;
+        }
+    }
+
+    // Evento disparado quando o usuário clica no botão Relatório
+    private async void ToolbarItem_Clicked_Relatorio(object sender, EventArgs e)
+    {
+        // Abre a nova página Relatório dentro da pilha de navegação
+        await Navigation.PushAsync(new Relatorio());
     }
 }
 //Realizado na agenda 4 como "desafio" proposto no fim da aula do professor Tiago Silva.

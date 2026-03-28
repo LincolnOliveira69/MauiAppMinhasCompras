@@ -18,7 +18,14 @@ public partial class NovoProduto : ContentPage
             {
                 Descricao = txt_descricao.Text,
                 Quantidade = Convert.ToDouble(txt_quantidade.Text),
-                Preco = Convert.ToDouble(txt_preco.Text)
+                Preco = Convert.ToDouble(txt_preco.Text),
+
+                // Calcula o total automaticamente
+                //Total = Convert.ToDouble(txt_preco.Text) * Convert.ToDouble(txt_quantidade.Text),
+
+                // Define a data de cadastro como a data/hora atual
+                DataCadastro = DateTime.Now
+
             };
 
             // Insere o produto no banco de dados
@@ -26,7 +33,7 @@ public partial class NovoProduto : ContentPage
 
             // Exibe mensagem de sucesso após a inserção
             await DisplayAlert("Sucesso!", "Registo Inserido", "OK");
-
+            await Navigation.PopAsync();
         }
         catch (Exception ex)
         {

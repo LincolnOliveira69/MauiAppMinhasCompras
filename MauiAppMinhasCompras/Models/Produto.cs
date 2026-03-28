@@ -22,6 +22,12 @@ namespace MauiAppMinhasCompras.Models
         }
         public double Quantidade { get; set; }
         public double Preco { get; set; }
-        public double Total { get => Quantidade * Preco; }
+        
+        // Calcula o total dinamicamente sempre que for acessado
+        public double Total => Quantidade * Preco;
+
+        // Nova propriedade para registrar a data da compra
+        public DateTime DataCadastro { get; set; }
+
     }
 }

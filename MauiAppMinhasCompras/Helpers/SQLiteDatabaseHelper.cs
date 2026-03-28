@@ -2,7 +2,7 @@
 // Para tanto basta clicar com o botão direito do mouse e clicar em "Remover e Classificar Usos".
 // Os "using" que não foram usados serão removidos.
 using MauiAppMinhasCompras.Models; // Importa o namespace onde está definida a classe Produto.
-using SQLite; // Importa a biblioteca SQLite para manipulação do banco de dados.
+using SQLite;
 
 namespace MauiAppMinhasCompras.Helpers // Define o namespace para organizar a classe helper.
 {
@@ -64,6 +64,11 @@ namespace MauiAppMinhasCompras.Helpers // Define o namespace para organizar a cl
 // O uso de % é um coringa, ou seja, não importa o que tem antes ou depois.
 
             return _conn.QueryAsync<Produto>(sql); // Executa a consulta e retorna lista de produtos encontrados.
+        }
+
+        internal object GetAll<T>()
+        {
+            throw new NotImplementedException();
         }
     }
 }
